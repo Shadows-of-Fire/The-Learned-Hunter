@@ -39,17 +39,17 @@ import net.minecraftforge.registries.ForgeRegistry;
 import shadows.placebo.config.Configuration;
 import shadows.placebo.util.RunnableReloader;
 
-@Mod(MobAttribs.MODID)
-public class MobAttribs {
+@Mod(TheLearnedHunter.MODID)
+public class TheLearnedHunter {
 
-	public static final String MODID = "mobattribs";
+	public static final String MODID = "learnedhunter";
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 	public static final Map<EntityType<?>, RangedAttribute> DMG_ATTRIBS = new IdentityHashMap<>();
 	public static final Map<EntityType<?>, UUID> DMG_MODIF_IDS = new IdentityHashMap<>();
 	public static final Map<EntityType<?>, Thresholds> THRESHOLDS = new IdentityHashMap<>();
 	public static Thresholds defaultThresholds;
 
-	public MobAttribs() {
+	public TheLearnedHunter() {
 		FMLJavaModLoadingContext.get().getModEventBus().register(this);
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, this::dmgHandler);
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, this::kill);
@@ -81,7 +81,7 @@ public class MobAttribs {
 	private void loadConfig() {
 		Configuration cfg = new Configuration(MODID);
 
-		cfg.setTitle("Mob Damage Attributes Configuration");
+		cfg.setTitle("The Learned Hunter Attributes Configuration");
 		cfg.setComment("This file refers to \"Thresholds\", which take the string format of a comma-separated list: kills|value,kills|value,kills|value\nFor example, a thresholds list specifying 10% more damage at 20 kills, and 50% more damage at 500 kills would be: 20|1.10,500|1.50");
 
 		String defStr = cfg.getString("Default Threshold", "_defaults", "", "The default threshold to apply to all entities if an entity-specific one is not specified. If no default is set, and no entity-specific one is set, an infinitely-scaling 3%/10 kills threshold will be used.");
@@ -148,8 +148,8 @@ public class MobAttribs {
 			if (oldVal != newVal) {
 				Component name = ((MutableComponent) type.getDescription()).withStyle(ChatFormatting.RED);
 				Component val = new TextComponent(ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format((newVal - 1) * 100) + "%").withStyle(ChatFormatting.GOLD);
-				Component specifier = new TranslatableComponent("mobattribs.msg." + (isVowel(name.getString().charAt(0)) ? "an" : "a"));
-				p.sendMessage(new TranslatableComponent("mobattribs.msg.rank_up", val, specifier, name), Util.NIL_UUID);
+				Component specifier = new TranslatableComponent("tlh.msg." + (isVowel(name.getString().charAt(0)) ? "an" : "a"));
+				p.sendMessage(new TranslatableComponent("tlh.msg.rank_up", val, specifier, name), Util.NIL_UUID);
 				p.level.playSound(null, p.getX(), p.getY(), p.getZ(), SoundEvents.NOTE_BLOCK_BELL, p.getSoundSource(), 1, 0.5F);
 			}
 		}
